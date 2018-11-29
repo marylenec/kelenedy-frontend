@@ -36,7 +36,7 @@ class ShoppingContainer extends Component {
 
   fetchProducts = (searchTerm) => {
     // console.log(`http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline&product_tags=${searchTerm}`)
-    fetch(`http://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}`)
+    fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}`)
     .then(res => res.json())
     .then(products => {
       this.products = products;
