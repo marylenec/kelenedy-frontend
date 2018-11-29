@@ -30,20 +30,32 @@ class ShoppingContainer extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchProducts('maybelline')
+    this.fetchProducts()
     // this.scrollFunction()
   }
 
   fetchProducts = (searchTerm) => {
     // console.log(`http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline&product_tags=${searchTerm}`)
-    fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}`)
-    .then(res => res.json())
-    .then(products => {
-      this.products = products;
-      this.addProductToState(products)
-      this.addProductTypeToState(products)
+
+    if (searchTerm === undefined) {
+      fetch(`https://makeup-api.herokuapp.com/api/v1/products.json`)
+        .then(res => res.json())
+        .then(products => {
+          this.products = products;
+          this.addProductToState(products)
+          this.addProductTypeToState(products)
     }
-  )}
+  )
+} else
+fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}`)
+.then(res => res.json())
+.then(products => {
+  this.products = products;
+  this.addProductToState(products)
+  this.addProductTypeToState(products)
+  }
+)
+}
 
 
   addProductToState = (products) => {
@@ -195,7 +207,7 @@ class ShoppingContainer extends Component {
                 this.state.products.length > 0
                   ? <ProductList products={this.filterProducts()}
                   addProductToCart={this.addProductToCart} addProductToFavList={this.addProductToFavList} />
-                  : <p>Loading...</p>
+                  : <p>Loading products from another API could take a sec...</p>
               }
             </div>
             <div className="col-md-3 col-sm-6">

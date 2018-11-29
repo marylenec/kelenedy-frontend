@@ -31,7 +31,7 @@ class ProductCard extends Component {
             ? <p className="card-text details ">{this.props.product.description}&nbsp;<span className="showDetails" onClick={this.toggleDetails}>Hide</span>
               </p>
             : <p className="card-text details ">
-                {this.props.product.description.substring(0, 50)}...&nbsp;
+                {this.props.product.description ? this.props.product.description.substring(0, 50) : null }...&nbsp;
                 <span className="showDetails" onClick={this.toggleDetails}>Product details</span>
               </p>
         }
