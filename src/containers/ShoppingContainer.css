@@ -1,0 +1,13 @@
+@media (max-width: 600px) {
+  .Shop-header {
+    height: 400px !important;
+  }
+}
+.Shop-header {
+  background-image: url('../images/makeupbag.jpg');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  height: 600px;
+  color: #000;
+}
