@@ -37,7 +37,7 @@ class Cart extends Component {
         <tbody key={item.id}>
           <tr>
             <td data-th="Product">
-              <img src={item.image_link} alt="{item.name}" className="img-responsive"/>
+              <img src={item.image_link} alt="{item.name}" className="img-responsive" style={{width:'150px'}}/>
               <h4 className="nomargin">{item.name}</h4>
               <p>{item.description}</p>
             </td>

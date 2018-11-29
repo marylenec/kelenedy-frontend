@@ -178,7 +178,7 @@ fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}
         {
             this.state.featuredProducts.length > 0
           ? <FeaturedList products={this.featuredProducts()} addProductToFavList={this.addProductToFavList} addProductToCart={this.addProductToCart} />
-          : <p>Loading...</p>
+          : <p>Loading products with rating of 5 could take a sec...</p>
         }
         </div>
       </div>
