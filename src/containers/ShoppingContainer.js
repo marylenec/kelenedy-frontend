@@ -19,6 +19,17 @@ class ShoppingContainer extends Component {
     super();
     this.products = []
     this.state = {
+      reviews: [],
+      username: "",
+      password: "",
+      currentUser: {},
+      loginError: "",
+      selectedReview: null,
+      newReview: {},
+      displayStatus: 'default',
+      searchTerm: "",
+      createUser: false,
+      newUser: {},
       products: [],
       favoritedProducts: [],
       featuredProducts: 'None',
@@ -31,6 +42,7 @@ class ShoppingContainer extends Component {
 
   componentDidMount = () => {
     this.fetchProducts()
+    this.fetchUser()
     // this.scrollFunction()
   }
 
@@ -57,6 +69,91 @@ fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}
 )
 }
 
+  fetchUser = () => {
+    const token = localStorage.token;
+
+    if (this.state.currentUser) { fetch('http://localhost:3000/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.error) {
+        this.setState({
+          currentUser: data
+        });
+      }
+    })
+    }
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    fetch('http://localhost:3000/login', {
+      method: "POST",
+      body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+        }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }, alert("Welcome Back!"))
+  }
+
+  handleUserChange = (e) => {
+    let value = e.target.value
+    let keyName = e.target.name
+    this.setState(state => {
+      state.newUser[keyName] = value
+      return state
+    })
+  }
+
+  displayCreateUser = () => {
+    this.setState({
+      createUser: true,
+      displayStatus: 'createUser'
+      }, () => console.log(this.state))
+  }
+
+  handleCreateUser = (e, newUser) => {
+    e.preventDefault()
+
+    fetch('http://localhost:3000/users/', {
+      method: "POST",
+      body: JSON.stringify(
+        newUser
+      ),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+     .then(res => res.json())
+     .then(data => {
+       if (!data.error) {
+         localStorage.token = data.token;
+         this.setState({
+           currentUser: data.user,
+           createUser: false,
+           displayStatus: 'confirmNewUser'
+         },()=>console.log(data.token));
+       }
+     })
+  }
+
+  handleLogOut = (e) => {
+    localStorage.token = "";
+  }
 
   addProductToState = (products) => {
     this.setState({products: products})
@@ -148,9 +245,6 @@ fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}
     document.documentElement.scrollTop = 0;
   }
 
-  login = ({ username, password }) => {
-    console.log(`Logging in ${username} with password ${password}`);
-  };
 
 // passing in the object when the callback is invoked at the child level
   // handleSelectedProduct = (product) => {
@@ -235,8 +329,17 @@ fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${searchTerm}
               <Cart cart={this.state.cart}  removeProductToCart={this.removeProductToCart} />
           )
         }}/>
-        <Route exact path="/login" component={LoginForm} />
-        <Footer />
+        <Route exact path="/login" render = {() => {
+          return (
+            <LoginForm
+              handleChange={this.handleChange} handleSubmit={this.handleSubmit}
+              handleUserChange={this.handleUserChange} currentUser={this.state.currentUser} handleLogOut={this.handleLogOut} displayCreateUser={this.displayCreateUser}
+              handleCreateUser={this.handleCreateUser}
+              displayState={this.state.displayStatus}
+              />
+          )
+        }} />
+
     </div>
   )
   }

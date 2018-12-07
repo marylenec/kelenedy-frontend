@@ -6,16 +6,22 @@ const NavBar = (props) => {
   const cartCount = props.cartCount.length === 0 ? null : props.cartCount.length
 
   return (
-  <div className="navbar">
-    <NavLink exact to="/" >KELENEDY COSMETICS</NavLink>
-    <NavLink exact to="/shop" >SHOP</NavLink>
-    <NavLink exact to="/cart" activeStyle={{
+
+  <nav className="navbar navbar-inverse navbar-fixed-top">
+  <div className="container-fluid">
+  <ul className="nav navbar-nav">
+    <li><NavLink exact to="/" >KELENEDY COSMETICS</NavLink></li>
+    <li><NavLink exact to="/shop" >SHOP</NavLink></li>
+    </ul>
+  <ul className="nav navbar-nav navbar-right">
+    <li><NavLink exact to="/cart" activeStyle={{
         textDecoration: 'underline'
-      }}><i className="fa fa-shopping-cart"/><span className="cartCount">{cartCount}</span></NavLink>
-    <NavLink exact to="/login" >
-      <span className="login">LOG IN</span>
-    </NavLink>
-  </div>
+      }}><i className="fa fa-shopping-cart"/><span className="cartCount">{cartCount}</span></NavLink></li>
+    
+    </ul>
+    </div>
+    </nav>
+
 )
 }
 export default NavBar;

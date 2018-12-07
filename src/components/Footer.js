@@ -11,12 +11,7 @@ const link = {
 
 const Footer = () =>
   <div className="footer">
-    <NavLink exact to="/" style={link} activeStyle={{
-        color: 'gray'
-      }}>Home</NavLink>
-    <NavLink exact to="/cart" style={link} activeStyle={{
-        color: 'gray'
-      }}>Cart</NavLink>
+    <p></p>
   </div>
 
 export default Footer;

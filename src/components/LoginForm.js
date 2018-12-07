@@ -33,32 +33,70 @@ path3 = require(`../images/eyeshadow.jpg`)
       <div className="container login">
       <div className="row">
         <div className="col-md-8 offset-md-2 col-xs-12">
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label>
-                Username
-                <input className="form-control" id="username" name="username" type="text" value={this.state.username} onChange={(e) => this.handleChange(e)}/>
-              </label>
+
+        { this.props.currentUser.id ?
+          <form className="right">
+          <div className="form-group mx-sm-3"><button className="btn btn-primary" onClick={(e) => this.props.handleLogOut()}>Log Out</button></div></form> :
+        <form className ="form-inline right" onSubmit={(e) => this.props.handleSubmit(e)}>
+          <div className="form-group mx-sm-3">
+              <label htmlFor="username" className="sr-only">Username</label>
+              <input id="username" name="username" placeholder="Username" type="text" onChange={(e) => this.props.handleChange(e)}/>
+          </div>
+          <div className="form-group mx-sm-3">
+            <label htmlFor="password" className="sr-only">Password</label>
+              <input id="password" name="password" type="password" placeholder="Password" onChange={(e) => this.props.handleChange(e)} />
+          </div>
+          <div className="form-group mx-sm-3">
+            <button className="btn btn-primary" type="submit">Log In</button>
+          </div>
+          <div className="form-group mx-sm-3" style={{cursor:'pointer'}}>
+            <small onClick={(e) => this.props.displayCreateUser()} >Create an Account</small>
+          </div>
+        </form>}
+        { this.props.displayState === 'createUser' ?
+          <div className='ReviewCard'>
+          <h4 className='subtitle'>Enter Log In Information</h4>
+          <form className="user form-group mx-sm-3" onSubmit={(e)=> this.props.handleCreateUser(e, this.props.newUser)}>
+          <div className="form-row mx-sm-3">
+            <div className="col">
+              <label htmlFor="username">Username: </label>
+              <input name="username" id="username" className="form-control" type="text" onChange={(e) => this.props.handleUserChange(e)} />
             </div>
-            <div className="form-group">
-              <label>
-                Password
-                <input className="form-control" id="password" name="password" type="password" onChange={(e) => this.handleChange(e)} value={this.state.password}/>
-              </label>
+            <div className="col">
+              <label htmlFor="password">Password: </label>
+              <input name="password" id="password" className="form-control" type="text" onChange={(e) => this.props.handleUserChange(e)} />
             </div>
-            <div className="form-group">
-              <button className="btn btn-submit" type="submit">LOG IN</button>
+          </div>
+          <br/>
+          <br/>
+          <div className="form-row mx-sm-3">
+            <div className="col">
+              <label htmlFor="first name">First Name: </label>
+              <input name="first_name" id="first_name" className="form-control" type="text" onChange={(e) => this.props.handleUserChange(e)} />
             </div>
+            <div className="col">
+              <label htmlFor="last name">Last Name: </label>
+              <input name="last_name" id="last_name" className="form-control" type="text" onChange={(e) => this.props.handleUserChange(e)} />
+            </div>
+          </div>
+          <div className="form-row mx-sm-3">
+            <div className="col">
+              <label htmlFor="bio">Bio: </label>
+              <input name="bio" id="bio" className="form-control" type="text" onChange={(e) => this.props.handleUserChange(e)} /><br/>
+          <button className="btn btn-primary" onClick={(e) => this.props.handleCreateUser(e, this.props.newUser)}>Save</button>
+          </div>
+          </div>
           </form>
+        </div> : null}
         </div>
       </div>
-    <div class="row profile">
-    <div class="col-md-4"><div className="card h-100">
+    <div className="row profile">
+    <div className="col-md-4"><div className="card h-100">
     <img className="card-img-default" src={this.path1} alt="lipstick" />
     </div></div>
-    <div class="col-md-4"><div className="card h-100">
+    <div className="col-md-4"><div className="card h-100">
     <img className="card-img-default" src={this.path2} alt="blush" /></div></div>
-    <div class="col-md-4"><div className="card h-100">
+    <div className="col-md-4"><div className="card h-100">
     <img className="card-img-default" src={this.path3} alt="eyeshadow" /></div></div>
     </div>
     </div>
